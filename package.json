@@ -1,0 +1,19 @@
+{
+  "name": "jquery-pluginify",
+  "version": "1.0.0-1",
+  "description": "Convert plugin class into a jQuery plugin",
+  "main": "pluginify.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marknotton/jquery-pluginify.git"
+  },
+  "author": "Mark Notton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marknotton/jquery-pluginify/issues"
+  },
+  "homepage": "https://github.com/marknotton/jquery-pluginify"
+}
