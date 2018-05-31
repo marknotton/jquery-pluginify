@@ -1,51 +1,70 @@
-/**
-* Convert plugin class into a jQuery plugin
-*
-* @see https://gist.github.com/monkeymonk/c08cb040431f89f99928132ca221d647
-* @see https://gist.github.com/benjasHu/9224d60fe0da10e697a1
-*
-* @param pluginName [string] Plugin name
-* @param className [object] Class of the plugin
-* @param shortHand [bool] Generate a shorthand as $.pluginName
-*
-* @example
-*
-* class MyPlugin {
-*   constructor(element, options) {
-*     // ...
-*   }
-* }
-*
-* MyPlugin.defaults = {};
-*
-* pluginify('myPlugin', MyPlugin);
-*/
+/** Convert plugin class into a jQuery plugin
+// @see https://github.com/marknotton/jquery-pluginify
+**/
 
-function pluginify(pluginName, className, shortHand = false) {
-  let dataName = `__${pluginName}`;
-  let old = $.fn[pluginName];
+function pluginify(...settings) {
 
-  $.fn[pluginName] = function (option) {
-    return this.each(function () {
+  if (settings.length == 1 && typeof settings == 'object') {
+    var {name, classname, iterate = true, shorthand = false} = settings[0];
+  } else {
+    var [name, classname, iterate = true, shorthand = false] = [settings][0];
+  }
+
+  if ( typeof name == 'undefined' || typeof classname == 'undefined' ) {
+    console.warn('Pluginify requires a name and class reference');
+    return false;
+  }
+
+  let dataName = `__${name}`;
+  let old = $.fn[name];
+
+  $.fn[name] = function (...option) {
+
+    if (option.length == 1 && typeof option == 'object') {
+      option = option[0];
+    }
+
+    if (iterate) {
+
+      this.each((index, element) => {
+
+        let $this = $(element);
+        let data = $this.data(dataName);
+        let options = $.extend({}, classname.settings, classname.defaults, $this.data(), typeof option === 'object' && option);
+
+        if (!data) {
+          $this.data(dataName, (data = new classname(this, options)));
+        }
+
+        if (typeof option === 'string') {
+          data[option]();
+        }
+
+      });
+
+    } else {
+
       let $this = $(this);
       let data = $this.data(dataName);
-      let options = $.extend({}, className.defaults, $this.data(), typeof option === 'object' && option);
+      let options = $.extend({}, classname.settings, classname.defaults, $this.data(), typeof option === 'object' && option);
 
       if (!data) {
-        $this.data(dataName, (data = new className(this, options)));
+        $this.data(dataName, (data = new classname(this, options)));
       }
 
       if (typeof option === 'string') {
         data[option]();
       }
-    });
+
+    }
+
   };
 
-  // - Short hand
-  if (shortHand) {
-    $[pluginName] = (options) => $({})[pluginName](options);
+  // Generate a shorthand as $.pluginName
+  if (shorthand) {
+    $[name] = (options) => $({})[name](options);
   }
 
   // - No conflict
-  $.fn[pluginName].noConflict = () => $.fn[pluginName] = old;
+  $.fn[name].noConflict = () => $.fn[name] = old;
 }
