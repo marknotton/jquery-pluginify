@@ -20,10 +20,6 @@ function pluginify(...settings) {
 
   $.fn[name] = function (...option) {
 
-    if (option.length == 1 && typeof option == 'object') {
-      option = option[0];
-    }
-
     if (iterate) {
 
       this.each((index, element) => {
