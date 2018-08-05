@@ -13,14 +13,15 @@ ES6 Support
 
 
 ### Options
-| Name | Type | Description |
-|--|--|--|
-| name | string | Plugin name reference
+| Name      | Type   | Description |
+|-----------|--------|-------------|
+| name      | string | Plugin name reference
 | classname | object | Class reference
-| iterate | bool | Defaults to true.
-| | | **True** - Defines a class for every instance of the elements found.
-| | | **False** - Defines the class just once, and passes all element instances through to the class.
-| shorthand | bool | Defaults to false. Generate a shorthand as $.name
+| iterate   | bool   | Defaults to true.
+|           | | **True** - Defines a class for every instance of the elements found.
+|           | | **False** - Defines the class just once, and passes all element instances through to the class.
+| shorthand | bool   | Defaults to false. Generate a shorthand as $.name
+| ignoreWarning | bool | Defaults to false. Set to `true` if you want to ignore the fact the jQuery isn't found at the time of calling this function.
 
 ### Example
 

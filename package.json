@@ -1,6 +1,6 @@
 {
   "name": "jquery-pluginify",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Convert plugin class into a jQuery plugin",
   "main": "pluginify.js",
   "scripts": {
